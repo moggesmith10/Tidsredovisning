@@ -1,0 +1,75 @@
+*{
+    color: white;
+    font-family: "Bahnschrift Semi-Light Condensed", "Consolas", "Sans-serif";
+    margin: 0;
+
+}
+header{
+    width: 100vw;
+    position: relative;
+    
+    left: 0;
+    top: 0;
+    border-bottom: 1px grey solid;
+    background-color: #52328f;
+    height: 10vh;
+    align-content: center;
+    line-height: 10vh;
+}
+header > h1{
+    font-size: 5vh;
+    display: inline-block;
+    margin: 0;
+    height: 10vh;
+    margin-left: 1vw;
+}
+.header_button{
+    position: relative;
+    display: block;
+    border-left: 1px grey solid;
+    height: 10vh;
+    float: right;
+    font-size: 4vh;
+    width: 20vw;
+    text-align: center;
+    
+}
+body{
+    background-color: #2e2e2e;
+    margin: 0;
+}
+main{
+    width: 100vw;
+    height: 75vh;
+}
+.list{
+    position: static;
+    display: block;
+    width: 75vw;
+    align-self: center;
+    float: center;
+    margin: auto;
+    margin-top: 5vh;
+}
+.task{
+    width: inherit;
+    height: 5vh;
+    font-size: 4vh;
+}
+.open{
+    height: 20vh !important; 
+}
+.time{
+    float: right;
+}
+.isOdd{
+    background-color: grey;
+}
+.isEven{
+    background-color: darkgrey;
+}
+.arrow{
+    float: right;
+    margin: 2vh;
+    height: 1vh;
+}
