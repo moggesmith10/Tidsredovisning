@@ -47,29 +47,72 @@ main{
     display: block;
     width: 75vw;
     align-self: center;
-    float: center;
     margin: auto;
     margin-top: 5vh;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+
 }
 .task{
-    width: inherit;
+    width: 75vw;
     height: 5vh;
     font-size: 4vh;
+    overflow: hidden;
+    border: 1px solid black;
 }
 .open{
     height: 20vh !important; 
 }
 .time{
     float: right;
+    margin-left: 5vw;
 }
 .isOdd{
-    background-color: grey;
+    background-color: #a0a0a0;
 }
 .isEven{
-    background-color: darkgrey;
+    background-color: #858585;
 }
 .arrow{
     float: right;
     margin: 2vh;
     height: 1vh;
+}
+.hovering{
+    background-image: linear-gradient( lightgrey, darkgrey)
+}
+.notes{
+    visibility: hidden;
+    min-width: 50vw;
+    max-width: 70vw;
+    max-height: 10vh;
+    overflow: hidden;
+    text-align: left;
+    float: left;
+}
+.open > .notes{
+    position: relative;
+    visibility: visible !important;
+    top: 10vh;
+}
+select{
+    color: black;
+}
+button{
+    color: black;
+}
+option{
+    color: black;
+}
+input{
+    color: black;
+    display: inline-block;
+}
+textarea{
+    color: black;
+    font-size: 20px;
 }
