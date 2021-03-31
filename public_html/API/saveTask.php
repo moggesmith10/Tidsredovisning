@@ -1,25 +1,33 @@
 <?php
 
-declare (strict_types=1);
+declare(strict_types=1);
 require_once '../src/Err.php';
 require_once '../src/printJson.php';
 
-// Uppdatera eller spara ny post?
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    if (isset($_GET["id"])) {
-        $outdata[] = "true";
-    } else {
-        $outdata[] = ["id" => 27];
-    }
+$db = new SQLite3("../../not_public/Tidsredovisning.db");
+
+if (isset($_POST["new"])) {
+    $db->query("INSERT INTO Tasks DEFAULT VALUES");
+    printJSON(["ID" => $db->lastInsertRowID()]);
 } else {
-    header("Content-Type: application/json; charset=UTF-8", true, 405);
-    echo json_encode(["Method not allowed" => "Missing POST-data"]);
-    exit;
-}
+    $task = [];
+    $task["TaskID"] = filter_input(INPUT_POST, "TaskID", FILTER_VALIDATE_INT);
+    $task["DutyID"] = filter_input(INPUT_POST, "DutyID", FILTER_VALIDATE_INT);
+    $task["TimeStart"] = filter_input(INPUT_POST, "TimeStart");
+    $task["TimeStop"] = filter_input(INPUT_POST, "TimeStop");
+    $task["Notes"] = filter_input(INPUT_POST, "Notes");
+    $task["Date"] = filter_input(INPUT_POST, "Date");
 
-if (isset($_GET["fails"])) {
-    $antal = filter_input(INPUT_GET, "fails", FILTER_VALIDATE_INT);
-    $outdata = getErrors($antal);
-}
+    if (is_int($task["TaskID"])) {
 
-printJSON($outdata);
+        if ($task["Date"] != null) {
+            $task["Date"] = preg_split("/-/", $task["Date"])[0] . preg_split("/-/", $task["Date"])[1] . preg_split("/-/", $task["Date"])[2]; //Ta bort - mellan datum-värden
+        }
+        $res = $db->query($db->escapeString("UPDATE Tasks SET DutyID=\"$task[DutyID]\", TimeStart=\"$task[TimeStart]\", TimeStop=\"$task[TimeStop]\", Notes=\"$task[Notes]\", Date=\"$task[Date]\" WHERE ID=$task[TaskID]"));
+        printJSON([$res]);
+    }
+    else{
+        header("Content-Type: application/json; charset=UTF-8", true, 400);
+        echo json_encode(["Bad indata" => "TaskID not set"]);
+    }
+}

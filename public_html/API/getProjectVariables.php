@@ -1,6 +1,6 @@
-
 <?php
 
+declare(strict_types=1);
 require_once '../src/Err.php';
 require_once '../src/printJson.php';
 
@@ -11,12 +11,5 @@ try {
     echo json_encode(["Internal server error" => "Could not connect to database"]);
 }
 
-$res = $db->query("SELECT * FROM Duties");
-
-$arr = [];
-
-while($row = $res->fetchArray(SQLITE3_ASSOC)){ //Loopa genom resultat och plocka fram en assoc array
-    $arr[] = $row;
-}
-
-printJSON($arr);
+printJSON($db->query("SELECT * FROM ProjectVariables")->fetchArray(SQLITE3_ASSOC));     //Få en assoc av första raden i ProjectVariables
+                                                                                        //Borde aldrig vara mer än en rad

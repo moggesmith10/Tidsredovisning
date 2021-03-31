@@ -1,6 +1,5 @@
 <?php
 
-declare(strict_types=1);
 require_once '../src/Err.php';
 require_once '../src/printJson.php';
 
@@ -10,17 +9,20 @@ try {
     header("Content-Type: application/json; charset=UTF-8", true, 500);
     echo json_encode(["Internal server error" => "Could not connect to database"]);
 }
-$ID = filter_input(INPUT_POST, "ID", FILTER_VALIDATE_INT);
 
-if (is_int($ID)) {
-    $res = $db->query("DELETE FROM Duties WHERE ID=$ID");
-    if ($res != false)
+$variable = filter_input(INPUT_POST, "variable");
+$newVal = filter_input(INPUT_POST, "newVal");
+
+
+if (!(is_null($variable) || is_null($newVal))) {
+    $res = $db->query($db->escapeString("UPDATE ProjectVariables SET $variable=\"$newVal\" WHERE ID = 1"));
+    if ($res != false) {
         printJSON([true]);
-    else {
+    } else {
         header("Content-Type: application/json; charset=UTF-8", true, 500);
         echo json_encode(["Internal server error" => "Unknown"]);
     }
 } else {
     header("Content-Type: application/json; charset=UTF-8", true, 400);
-    echo json_encode(["Bad indata" => "ID not int"]);
+    echo json_encode(["Bad indata" => "variable or newVal is null"]);
 }

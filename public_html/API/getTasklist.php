@@ -1,47 +1,43 @@
 <?php
 
-declare (strict_types=1);
+declare(strict_types=1);
 require_once '../src/Err.php';
 require_once '../src/printJson.php';
 
-$duties = ["Slappat", "Kodat frontend", "Slötittat på YouTube", "Kodat backend", "Felsökt frontend", "Felsökt backend", "Kaffepaus", "Sökt information på nätet"];
-
-if (isset($_GET["page"])) {
-    $sida = filter_input(INPUT_GET, "page", FILTER_VALIDATE_INT);
-    $outdata[] = ["sida" => $sida];
-        for ($i = 1; $i < 21; $i++) {
-        $postnr = 20 * ($sida - 1) + $i;
-        $rnd = random_int(0, count($duties) - 1);
-        $outdata[] = ["postnr" => $postnr , 
-            "id" => $i,
-            "start" => date("Y-m-d H:i", strtotime("3 hours $i days ago")),
-            "slut" => date("Y-m-d H:i", strtotime("1 hours $i days ago")),
-            "uppgift" => $duties[$rnd],
-            "uppgiftid" => $rnd,
-            "tid" => 1,  ];
-    }
-} elseif (isset($_GET["to"]) && isset($_GET["from"])) {
-    for ($i = 1; $i < 21; $i++) {
-        $postnr =  $i;
-        $rnd = random_int(0, count($duties) - 1);
-        $outdata[] = ["postnr" => $postnr,
-            "id" => $i,
-            "start" => date("Y-m-d H:i", strtotime("3 hours $i days ago")),
-            "slut" => date("Y-m-d H:i", strtotime("2 hours $i days ago")),
-            "uppgift" => $duties[$rnd],
-            "uppgiftid" => $rnd,
-            "tid" => 1,
-        ];
-    }
-} else {
-    header("Content-Type: application/json; charset=UTF-8", true, 400);
-    echo json_encode(["Bad indata" => "Invalid GET (no page OR to and from)"]);
-    exit;
+try {
+    $db = new SQLite3("../../not_public/Tidsredovisning.db");
+} catch (Exception $e) {
+    header("Content-Type: application/json; charset=UTF-8", true, 500);
+    echo json_encode(["Internal server error" => "Could not connect to database"]);
 }
 
-if (isset($_GET["fails"])) {
-    $antal = filter_input(INPUT_GET, "fails", FILTER_VALIDATE_INT);
-    $outdata = getErrors($antal);
+if (isset($_POST["limitFrom"])) {
+    $limitFrom = filter_input(INPUT_POST, "limitFrom", FILTER_VALIDATE_INT);
+    if (is_int($limitFrom)) {
+        $res = $db->query("SELECT ID, DutyID, Date, TimeStart, TimeStop, Notes FROM Tasks ORDER BY Date DESC LIMIT $limitFrom, 100");
+    }
+    else {
+        header("Content-Type: application/json; charset=UTF-8", true, 400);
+        echo json_encode(["Bad indata" => "limitFrom is set but not int"]);
+    }
+} else
+    $res = $db->query("SELECT ID, DutyID, Date, TimeStart, TimeStop, Notes FROM Tasks ORDER BY Date DESC");
+
+$arr = [];
+
+while ($row = $res->fetchArray(SQLITE3_ASSOC)) {
+    foreach ($row as $key => $var) {
+        if (is_null($var)) { //Ifall null
+            $row[$key] = ""; //Gör till tom sträng
+            if ($key == "DutyID") { //Ifall null och DutyID
+                $row[$key] = "new"; //New ska användas istället för null
+            }
+        }
+        if ($key == "Date") {
+            $row[$key] = substr((string) $var, 0, 4) . "-" . substr((string) $var, 4, 2) . "-" . substr((string) $var, 6, 2);
+        }
+    }
+    $arr[] = $row;
 }
 
-printJSON($outdata);
+printJSON($arr);

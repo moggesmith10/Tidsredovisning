@@ -1,0 +1,5 @@
+Settings.js
+--Spara faktist fungerar
+
+setProjectVariable.php
+Lägg till lite checkande kod

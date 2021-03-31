@@ -1,0 +1,91 @@
+saveTask
+
+Förväntar:
+TaskID
+DutyID
+TimeStart: 13:30
+TimeStop: 15:00
+Notes
+Date: ex. 2020-02-29: POST
+
+saknar felsökning
+
+eller
+
+new :POST
+Fungerar
+
+-------------------------------
+
+getDuty
+Förväntar:
+ID
+
+--Fungerar inte med tom ID
+Error med nytt ounikt namn
+
+Fungerar för ny
+Fungerar för updatera
+
+Korrekt error för ifall ingenting ändrades vid uppdatering
+Korrekt error med ogiltig/tom ID
+
+-------------------------------
+
+setProjectVariable
+Förväntar:
+variable :POST
+newVal :POST
+
+Saknar felmeddelanden
+Fungerar
+
+-------------------------------
+
+saveDuty
+Förväntar:
+ID:POST
+Name:POST
+
+Inget felmeddelande
+Error med tomt ID
+Succee med ogiltigt ID (icke existerande)
+Dålig 
+
+-------------------------------
+
+getTasklist
+
+limitFrom:POST -valfri
+
+dålig felsökning med ogiltig limitFrom
+Fungerar
+
+-------------------------------
+
+getTask (oanvänd)
+
+-------------------------------
+
+getDuty (oanvänd)
+-------------------------------
+
+getCompilation (oanvänd)
+
+-------------------------------
+
+getProjectVariables
+
+(ingen input)
+Fungerar
+
+-------------------------------
+
+deleteTask
+
+ID:POST
+
+dålig error utan input
+dålig error med dålig input
+Fungerar inte
+Succeemedelande utan att ha tagit bort något

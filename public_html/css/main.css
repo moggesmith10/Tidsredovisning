@@ -1,6 +1,6 @@
 *{
     color: white;
-    font-family: "Bahnschrift Semi-Light Condensed", "Consolas", "Sans-serif";
+    font-family: "Arial";
     margin: 0;
 
 }
@@ -12,22 +12,22 @@ header{
     top: 0;
     border-bottom: 1px grey solid;
     background-color: #52328f;
-    height: 10vh;
+    height: 8vh;
+    line-height: 8vh;
     align-content: center;
-    line-height: 10vh;
 }
 header > h1{
     font-size: 5vh;
     display: inline-block;
     margin: 0;
-    height: 10vh;
+    height: inherit;
     margin-left: 1vw;
 }
 .header_button{
     position: relative;
     display: block;
     border-left: 1px grey solid;
-    height: 10vh;
+    height: inherit;
     float: right;
     font-size: 4vh;
     width: 20vw;
@@ -37,6 +37,8 @@ header > h1{
 body{
     background-color: #2e2e2e;
     margin: 0;
+    overflow-x: hidden;
+    overflow-y: scroll;
 }
 main{
     width: 100vw;
@@ -48,19 +50,19 @@ main{
     width: 75vw;
     align-self: center;
     margin: auto;
-    margin-top: 5vh;
+    margin-top: 1vh;
     -webkit-touch-callout: none;
     -webkit-user-select: none;
     -khtml-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-
 }
 .task{
+    position: relative;
     width: 75vw;
     height: 5vh;
-    font-size: 4vh;
+    font-size: 2.5vh;
     overflow: hidden;
     border: 1px solid black;
 }
@@ -83,7 +85,11 @@ main{
     height: 1vh;
 }
 .hovering{
-    background-image: linear-gradient( lightgrey, darkgrey)
+    background-image: linear-gradient( #52328f30, darkgrey);
+}
+.duty{
+    max-width: 50vw;
+    float: left;
 }
 .notes{
     visibility: hidden;
@@ -94,10 +100,21 @@ main{
     text-align: left;
     float: left;
 }
+.removeButton{
+    position: absolute;
+    visibility: hidden;
+    float: right;
+    top: 15vh;
+    right: 1vw;
+    z-index: 99999;/* Im big lazy, ok?*/
+}
 .open > .notes{
     position: relative;
     visibility: visible !important;
     top: 10vh;
+}
+.open > .removeButton{
+    visibility: visible !important;
 }
 select{
     color: black;
@@ -115,4 +132,94 @@ input{
 textarea{
     color: black;
     font-size: 20px;
+}
+#newTaskButton{
+    position: static;
+    display: block;
+    align-self: center;
+    margin: auto;
+    margin-top: 2vw;
+    padding: 0.5vh;
+    margin-bottom: 0.5vh;
+}
+.main{
+    margin: 15%;
+    margin-top: 5%;
+    margin-bottom: 2%;
+    padding: 2%;
+    background-color: silver;
+    display: block;
+    min-height: 50vh;
+}
+.main > div{
+    float: left;
+}
+.floatRight{
+position: relative;
+right: 0;
+left: 5vw;
+
+}
+.floatLeft{
+    position: relative;
+    left: 0;
+}
+.dutyList{
+    display: block;
+    float: right !important;
+    background-color: darkgray;
+    padding: 1vw;
+}
+.dutyList img{
+    max-width: 1.5vh;
+}
+#addDutyButton{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: inherit;
+}
+.Chart{
+    min-width: 30vw;
+    min-height: 20vh;
+}
+.element{
+padding: 1vh;
+}
+#settings{
+    background-color: darkgrey;
+    padding: 1vw;
+}
+.renameButton{
+    background-image: url(../images/yellow_128.png);
+    background-size: 1.5vh;
+    width: 1.5vh;
+    height: 1.5vh;
+    padding: 0;
+    margin: 0.2vh;
+    display: inline-block;
+}
+.renameButton:hover{
+    background-image: url(../images/yellow_128_dark.png);
+
+}
+.removeDutyButton{
+    background-image: url(../images/red_128.png);
+    background-size: 1.5vh;
+    width: 1.5vh;
+    height: 1.5vh;
+    padding: 0;
+    margin: 0.2vh;
+    display: inline-block;
+}
+.removeDutyButton:hover{
+    background-image: url(../images/red_128_dark.png) !important;
+}
+#pageDiv{
+    text-align: center;
+    width: inherit;
+    font-size: large;
+}
+#pageDiv > a{
+    cursor: pointer;
 }

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Tidsredovisning</title>
+    <link href="css/main.css" rel="stylesheet">
+    <script src="js/elements.js"></script>
+    <script src="js/list.js"></script>
+    <script src="js/item.js"></script>
+    <script src="Frameworks/js.cookie-2.2.1.min.js"></script>
+    <script src="js/js.js"></script>
+    <script src="js/universal.js">univLoad()</script>
+
+</head>
+
+<body onload="onLoad(), univLoad()">
+
+    <header>
+        <h1><a href="index.html" id=title>Loading...</a></h1>
+        <div class="header_button"><a href="settings.html">Inställningar</a></div>
+        <div class="header_button"><a href="statistics.html">Statistik</a></div>
+    </header>
+    <main>
+        <button onmouseup="newTask()" id="newTaskButton">Ny</button>
+        <div class="list" id="list">
+
+        </div>
+        <div id="pageDiv"></div>
+    </main>
+</body>
+
+</html>
